@@ -1,0 +1,170 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user account for FOS or Central Admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["fos", "admin"] },
+        "mobileNumber": { "type": "string" },
+        "passwordHash": { "type": "string" },
+        "passwordChanged": { "type": "boolean" },
+        "backupCodeHash": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "role", "passwordHash"]
+    },
+    "Dealer": {
+      "title": "Dealer",
+      "description": "Store Master record with dealer address, zone, balances and GST",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "name": { "type": "string" },
+        "customerName": { "type": "string" },
+        "warehouseName": { "type": "string" },
+        "fosName": { "type": "string" },
+        "address": { "type": "string" },
+        "area": { "type": "string" },
+        "zone": { "type": "string" },
+        "pincode": { "type": "string" },
+        "phone": { "type": "string" },
+        "gstNumber": { "type": "string" },
+        "outstanding": { "type": "number" },
+        "gap": { "type": "number" },
+        "city": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["code", "name"]
+    },
+    "SKU": {
+      "title": "SKU",
+      "description": "OPPO smartphone model variant",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "modelName": { "type": "string" },
+        "series": { "type": "string" },
+        "ramRom": { "type": "string" },
+        "stdInventory": { "type": "number" },
+        "colorVariants": { "type": "array" },
+        "sortOrder": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "modelName", "series"]
+    },
+    "CloudInventory": {
+      "title": "CloudInventory",
+      "description": "Dealer MTD Cloud Inventory record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "dealerCode": { "type": "string" },
+        "dealerName": { "type": "string" },
+        "sku": { "type": "string" },
+        "colour": { "type": "string" },
+        "mtdInventory": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "dealerCode", "sku"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Dispatched order placed by FOS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "orderNumber": { "type": "string" },
+        "dealerCode": { "type": "string" },
+        "dealerName": { "type": "string" },
+        "fosName": { "type": "string" },
+        "date": { "type": "string" },
+        "totalQuantity": { "type": "number" },
+        "items": { "type": "array" },
+        "status": { "type": "string", "enum": ["fresh", "draft", "synced"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "dealerCode", "fosName", "totalQuantity"]
+    },
+    "AdminNotification": {
+      "title": "AdminNotification",
+      "description": "Notification alert for orders and sync events",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "type": { "type": "string" },
+        "read": { "type": "boolean" },
+        "orderId": { "type": "string" },
+        "dealerName": { "type": "string" },
+        "fosName": { "type": "string" }
+      },
+      "required": ["id", "title", "message", "timestamp"]
+    },
+    "DayClose": {
+      "title": "DayClose",
+      "description": "FOS daily shift closure record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "fosName": { "type": "string" },
+        "closedAt": { "type": "string" },
+        "ordersCount": { "type": "number" },
+        "totalUnits": { "type": "number" }
+      },
+      "required": ["id", "date", "fosName", "closedAt"]
+    },
+    "DataStatus": {
+      "title": "DataStatus",
+      "description": "Metadata status showing online row counts and upload timestamps",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "dataType": { "type": "string" },
+        "rowCount": { "type": "number" },
+        "lastUploadTime": { "type": "string" },
+        "updatedBy": { "type": "string" }
+      },
+      "required": ["id", "dataType", "rowCount"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of user accounts"
+    },
+    "/dealers/{dealerId}": {
+      "schema": "Dealer",
+      "description": "Collection of store master dealer documents"
+    },
+    "/skus/{skuId}": {
+      "schema": "SKU",
+      "description": "Collection of SKU master catalog variants"
+    },
+    "/cloud_inventory/{invId}": {
+      "schema": "CloudInventory",
+      "description": "Collection of MTD Cloud Inventory rows"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of placed orders"
+    },
+    "/notifications/{notifId}": {
+      "schema": "AdminNotification",
+      "description": "Collection of system notifications"
+    },
+    "/day_close/{dayCloseId}": {
+      "schema": "DayClose",
+      "description": "Collection of daily shift closing logs"
+    },
+    "/data_status/{statusId}": {
+      "schema": "DataStatus",
+      "description": "Collection of data status counters and upload times"
+    }
+  }
+}

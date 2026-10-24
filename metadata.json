@@ -1,0 +1,6 @@
+{
+  "name": "Suprabhat Telecom – Order App",
+  "description": "Mobile-first order booking app for Suprabhat Telecom LLP Field Officers (FOS) to book Oppo smartphone orders for authorized dealers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users collection: user credentials, profile and password hashes
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+    
+    // Store Master dealers: store addresses, GST numbers, balances
+    match /dealers/{dealerId} {
+      allow read, write: if true;
+    }
+    
+    // SKU Master: Oppo smartphone models and series
+    match /skus/{skuId} {
+      allow read, write: if true;
+    }
+    
+    // Cloud Inventory: dealer-wise stock (MTD)
+    match /cloud_inventory/{invId} {
+      allow read, write: if true;
+    }
+    
+    // Orders: punched by FOS field officers
+    match /orders/{orderId} {
+      allow read, write: if true;
+    }
+    
+    // System notifications and order alerts
+    match /notifications/{notifId} {
+      allow read, write: if true;
+    }
+    
+    // FOS end-of-day closure status
+    match /day_close/{dayCloseId} {
+      allow read, write: if true;
+    }
+    
+    // Data status counters and upload timestamps
+    match /data_status/{statusId} {
+      allow read, write: if true;
+    }
+  }
+}
